@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 
 
-const SearchBar = () => {
+const SearchBar = (props) => {
 
 
     
-    const [searchTerm, setSearchTerm] = useState('');
+    // const [searchTerm, setSearchTerm] = useState('');
     const [filters, setFilters] = useState({
         brand: '',
         priceRange: '',
@@ -13,10 +13,12 @@ const SearchBar = () => {
         seatingCapacity: '',
     });
 
+    const [fileteredLists, setFileteredLists] = useState('');
     
     // Handle search term change
     const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
+        props.setSearchTerm(e.target.value);
+        console.log(props.searchTerm)
       };
     
       // Handle filter change
@@ -34,7 +36,7 @@ const SearchBar = () => {
           <div className="w-full md:w-1/2">
             <input
               type="text"
-              value={searchTerm}
+              value={props.searchTerm}
               onChange={handleSearchChange}
               placeholder="Search products..."
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"

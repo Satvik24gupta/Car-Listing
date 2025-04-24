@@ -6,6 +6,8 @@ const App = () => {
 
   const [wishlist, setWishlist] = useState([]);
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+  
 
   // Function to handle adding to wishlist
   const addToWishlist = () => {
@@ -18,7 +20,7 @@ const App = () => {
   return (
     <>
     
-    <nav className="bg-gray-800 text-white p-4 shadow-md">
+    <nav className="bg-gray-800 text-white p-4 shadow-md sticky top-0 w-full z-10">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo Section */}
         <div className="text-lg font-bold">
@@ -51,8 +53,8 @@ const App = () => {
       Welcome to our car finder app
     </h1>
 
-    <SearchBar/>
-    <CarList wishlist ={wishlist} setWishlist={setWishlist} wishlistCount = {wishlistCount} setWishlistCount={setWishlistCount}/>
+    <SearchBar searchTerm = {searchTerm} setSearchTerm = {setSearchTerm}/>
+    <CarList searchTerm = {searchTerm} setSearchTerm = {setSearchTerm} wishlist ={wishlist} setWishlist={setWishlist} wishlistCount = {wishlistCount} setWishlistCount={setWishlistCount}/>
     </>
   )
 }

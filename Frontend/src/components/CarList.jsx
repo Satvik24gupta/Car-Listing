@@ -9,6 +9,7 @@ import { FaRegHeart } from "react-icons/fa";
 
 const CarList = (props) => {
     const [cars, setCars] = useState([]);
+    const [filteredCars, setfilteredCars] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -19,6 +20,7 @@ const CarList = (props) => {
         .then((response) => response.json())
         .then((data) => {
             setCars(data); // Store the car data in the state
+            setfilteredCars(data); // Store the car data in the state
             setLoading(false); // Set loading to false after data is fetched
         })
         .catch((err) => {
@@ -26,6 +28,24 @@ const CarList = (props) => {
             setLoading(false); // Set loading to false if there's an error
         });
     }, [props.wishlist]);
+
+    useEffect(()=>{
+        // const filteredCars = cars.filter(car => car.make.toLowerCase() === props.searchTerm.toLowerCase());
+        if(props.searchTerm!=''){
+            const filteredCar = cars.filter(car => 
+                car.make.toLowerCase().startsWith(props.searchTerm.trim().toLowerCase()) ||
+                car.model.toLowerCase().startsWith(props.searchTerm.trim().toLowerCase()) ||
+                `${car.make.toLowerCase()} ${car.model.toLowerCase()}`.startsWith(props.searchTerm.trim().toLowerCase())
+
+            );
+            // cars.make.toLowerCase().startsWith(props.searchTerm.toLowerCase())
+            setfilteredCars(filteredCar);
+        }
+        else{
+            setfilteredCars(cars);
+        }
+
+    }, [props.searchTerm])
 
     function handleWishClick(car){
         console.log(`Car ${car.id} added to wishlist`);
@@ -50,7 +70,7 @@ const CarList = (props) => {
         error ? <div className="text-center p-4 text-red-500">{error}</div>
         :
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {cars.map((car) => (
+            {filteredCars.map((car) => (
             <div
                 key={car.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300"
