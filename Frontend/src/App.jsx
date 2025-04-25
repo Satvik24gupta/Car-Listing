@@ -1,11 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SearchBar from './components/SearchBar';
 import CarList from './components/CarList';
 
 const App = () => {
 
-  const [wishlist, setWishlist] = useState([]);
-  const [wishlistCount, setWishlistCount] = useState(0);
+  // const [wishlist, setWishlist] = useState([]);
+  // const [wishlistCount, setWishlistCount] = useState(0);
+
+  // fetch the wishlist from local storage
+  const [wishlist, setWishlist] = useState(() => {
+    const storedWishlist = localStorage.getItem('wishlist');
+    return storedWishlist ? JSON.parse(storedWishlist) : [];
+  }
+  );
+  
+  // set the wishlist in local storage
+  const setWishlistInLocalStorage = (wishlist) => {
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  }
+  useEffect(() => {
+    setWishlistInLocalStorage(wishlist);
+  }, [wishlist]);
+  const [wishlistCount, setWishlistCount] = useState(wishlist.length);
+  
+  // const [wishlistCount, setWishlistCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   
 
