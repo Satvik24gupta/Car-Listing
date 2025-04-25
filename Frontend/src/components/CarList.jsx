@@ -5,6 +5,7 @@ import HashLoader from 'react-spinners/HashLoader';
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa6";
 import { FaRegHeart } from "react-icons/fa";
+import {NavLink } from "react-router-dom";
 
 
 const CarList = (props) => {
@@ -81,11 +82,20 @@ const CarList = (props) => {
                     {/* <FaHeart/> */}
                     {props.wishlist.includes(car.id) ? <FaHeart/> : <FaRegHeart/>}
                 </span>
+                {/* <img
+                src={car.image}
+                alt={`${car.make} ${car.model}`}
+                className="w-full h-48 object-cover"
+                /> */}
+                <NavLink to={`/detail/${car.id}`}>
                 <img
                 src={car.image}
                 alt={`${car.make} ${car.model}`}
                 className="w-full h-48 object-cover"
                 />
+                </NavLink> 
+
+
                 </div>
                 <div className="p-4">
                 <h3 className="font-semibold text-xl mb-2">{`${car.make} ${car.model}`}</h3>
