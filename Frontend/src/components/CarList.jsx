@@ -9,18 +9,19 @@ import {NavLink } from "react-router-dom";
 
 
 const CarList = (props) => {
-    const [cars, setCars] = useState([]);
+    // const [cars, setCars] = useState([]);
     const [filteredCars, setfilteredCars] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     // Fetch the car data from the API
     useEffect(() => {
-        console.log(props.wishlist)
+        console.log(props.cars)
+        // console.log(props.wishlist)
         fetch('https://www.freetestapi.com/api/v1/cars')
         .then((response) => response.json())
         .then((data) => {
-            setCars(data); // Store the car data in the state
+            props.setCars(data); // Store the car data in the state
             setfilteredCars(data); // Store the car data in the state
             setLoading(false); // Set loading to false after data is fetched
         })
@@ -33,7 +34,7 @@ const CarList = (props) => {
     useEffect(()=>{
         // const filteredCars = cars.filter(car => car.make.toLowerCase() === props.searchTerm.toLowerCase());
         if(props.searchTerm!=''){
-            const filteredCar = cars.filter(car => 
+            const filteredCar = props.cars.filter(car => 
                 car.make.toLowerCase().startsWith(props.searchTerm.trim().toLowerCase()) ||
                 car.model.toLowerCase().startsWith(props.searchTerm.trim().toLowerCase()) ||
                 `${car.make.toLowerCase()} ${car.model.toLowerCase()}`.startsWith(props.searchTerm.trim().toLowerCase())
@@ -43,7 +44,7 @@ const CarList = (props) => {
             setfilteredCars(filteredCar);
         }
         else{
-            setfilteredCars(cars);
+            setfilteredCars(props.cars);
         }
 
     }, [props.searchTerm])
@@ -87,7 +88,7 @@ const CarList = (props) => {
                 alt={`${car.make} ${car.model}`}
                 className="w-full h-48 object-cover"
                 /> */}
-                <NavLink to={`/detail/${car.id}`}>
+                <NavLink to={`/detail/${car.id }`}>
                 <img
                 src={car.image}
                 alt={`${car.make} ${car.model}`}
